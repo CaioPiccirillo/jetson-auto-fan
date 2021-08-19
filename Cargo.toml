@@ -1,0 +1,26 @@
+[package]
+name = "jetson-auto-fan"
+version = "0.1.0"
+edition = "2018"
+authors = ["Caio Piccirillo <caiopiccirillo@gmail.com>"]
+description = "A simple application for controlling Jetson Nano's fan."
+readme = "README.md"
+license = "MIT"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = "3.0.0-beta.4"
+
+[package.metadata.deb]
+license-file = ["LICENSE", "4"]
+depends = "$auto"
+section = "utility"
+extended-description = """A simple application for controlling Jetson Nano's fan. \
+Which reads the temperature and uses a proportional control for fan."""
+priority = "optional"
+assets = [
+    ["target/release/jetson-auto-fan", "usr/bin/", "755"],
+    ["README.md", "usr/share/doc/jetson-auto-fan/README", "644"],
+]
+maintainer-scripts = "debian/"
+systemd-units = { enable = false }

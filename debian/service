@@ -1,0 +1,11 @@
+[Unit]
+Description=A simple application for controlling Jetson Nano's fan.
+
+[Service]
+ExecStart=/usr/bin/jetson-auto-fan --init
+User=root
+StandardOutput=journal+console
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
