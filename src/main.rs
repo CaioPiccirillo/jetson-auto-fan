@@ -21,17 +21,21 @@ const HIGH_LIMIT: usize = 40_000;
 
 fn main() {
     let opts: Opts = Opts::parse();
-
+    let mut temp: usize = 0;
     if opts.init {
         loop {
             let sleep_duration = time::Duration::from_secs(10);
             let contents = fs::read_to_string(THERMAL_ZONE)
                 .expect("Something went wrong reading the temperature");
-            let temp = contents.trim().parse::<usize>().unwrap();
-            println!("Temperature: {}", temp);
-            let pwm = map_fan_pwm(temp);
-            println!("PWM: {}", pwm);
-            fs::write(TARGET_PWM, pwm.to_string()).expect("Something went wrong writing to file");
+            let current_temp = contents.trim().parse::<usize>().unwrap();
+            if current_temp != temp {
+                println!("Temperature: {}", current_temp);
+                let pwm = map_fan_pwm(current_temp);
+                println!("PWM: {}", pwm);
+                fs::write(TARGET_PWM, pwm.to_string())
+                    .expect("Something went wrong writing to file");
+            }
+            temp = current_temp;
             thread::sleep(sleep_duration);
         }
     }

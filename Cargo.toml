@@ -1,6 +1,6 @@
 [package]
 name = "jetson-auto-fan"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2018"
 authors = ["Caio Piccirillo <caiopiccirillo@gmail.com>"]
 description = "A simple application for controlling Jetson Nano's fan."
